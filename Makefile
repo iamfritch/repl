@@ -78,12 +78,7 @@ DOCKERIZE =
 # Implementation specific settings
 #
 
-IMPLS = ada awk bash basic c chuck clojure coffee common-lisp cpp crystal cs d dart \
-	elisp elixir elm erlang es6 factor forth fsharp go groovy gst guile haskell \
-	haxe hy io java js julia kotlin livescript logo lua make mal matlab miniMAL \
-	nasm nim objc objpascal ocaml perl perl6 php pil plpgsql plsql powershell ps \
-	python r racket rexx rpython ruby rust scala scheme skew swift swift3 tcl \
-	ts vb vhdl vimscript yorick
+IMPLS = c python
 
 EXTENSION = .mal
 
@@ -171,78 +166,8 @@ scheme_STEP_TO_PROG_cyclone     = scheme/$($(1))
 scheme_STEP_TO_PROG_foment      = scheme/$($(1)).scm
 
 # Map of step (e.g. "step8") to executable file for that step
-ada_STEP_TO_PROG =     ada/$($(1))
-awk_STEP_TO_PROG =     awk/$($(1)).awk
-bash_STEP_TO_PROG =    bash/$($(1)).sh
-basic_STEP_TO_PROG =   $(basic_STEP_TO_PROG_$(basic_MODE))
 c_STEP_TO_PROG =       c/$($(1))
-chuck_STEP_TO_PROG =   chuck/$($(1)).ck
-clojure_STEP_TO_PROG = $(clojure_STEP_TO_PROG_$(clojure_MODE))
-coffee_STEP_TO_PROG =  coffee/$($(1)).coffee
-common-lisp_STEP_TO_PROG =  common-lisp/$($(1))
-cpp_STEP_TO_PROG =     cpp/$($(1))
-crystal_STEP_TO_PROG = crystal/$($(1))
-cs_STEP_TO_PROG =      cs/$($(1)).exe
-d_STEP_TO_PROG =       d/$($(1))
-dart_STEP_TO_PROG =    dart/$($(1)).dart
-elisp_STEP_TO_PROG =   elisp/$($(1)).el
-elixir_STEP_TO_PROG =  elixir/lib/mix/tasks/$($(1)).ex
-elm_STEP_TO_PROG =     elm/$($(1)).js
-erlang_STEP_TO_PROG =  erlang/$($(1))
-es6_STEP_TO_PROG =     es6/$($(1)).mjs
-factor_STEP_TO_PROG =  factor/$($(1))/$($(1)).factor
-forth_STEP_TO_PROG =   forth/$($(1)).fs
-fsharp_STEP_TO_PROG =  fsharp/$($(1)).exe
-go_STEP_TO_PROG =      go/$($(1))
-groovy_STEP_TO_PROG =  groovy/$($(1)).groovy
-gst_STEP_TO_PROG =     gst/$($(1)).st
-guile_STEP_TO_PROG =   guile/$($(1)).scm
-haskell_STEP_TO_PROG = haskell/$($(1))
-haxe_STEP_TO_PROG =    $(haxe_STEP_TO_PROG_$(haxe_MODE))
-hy_STEP_TO_PROG =      hy/$($(1)).hy
-io_STEP_TO_PROG =      io/$($(1)).io
-java_STEP_TO_PROG =    java/target/classes/mal/$($(1)).class
-js_STEP_TO_PROG =      js/$($(1)).js
-julia_STEP_TO_PROG =   julia/$($(1)).jl
-kotlin_STEP_TO_PROG =  kotlin/$($(1)).jar
-livescript_STEP_TO_PROG = livescript/$($(1)).js
-logo_STEP_TO_PROG =    logo/$($(1)).lg
-lua_STEP_TO_PROG =     lua/$($(1)).lua
-make_STEP_TO_PROG =    make/$($(1)).mk
-mal_STEP_TO_PROG =     mal/$($(1)).mal
-matlab_STEP_TO_PROG =  matlab/$($(1)).m
-miniMAL_STEP_TO_PROG = miniMAL/$($(1)).json
-nasm_STEP_TO_PROG =    nasm/$($(1))
-nim_STEP_TO_PROG =     nim/$($(1))
-objc_STEP_TO_PROG =    objc/$($(1))
-objpascal_STEP_TO_PROG = objpascal/$($(1))
-ocaml_STEP_TO_PROG =   ocaml/$($(1))
-perl_STEP_TO_PROG =    perl/$($(1)).pl
-perl6_STEP_TO_PROG =   perl6/$($(1)).pl
-php_STEP_TO_PROG =     php/$($(1)).php
-pil_STEP_TO_PROG =     pil/$($(1)).l
-plpgsql_STEP_TO_PROG = plpgsql/$($(1)).sql
-plsql_STEP_TO_PROG =   plsql/$($(1)).sql
-powershell_STEP_TO_PROG =  powershell/$($(1)).ps1
-ps_STEP_TO_PROG =      ps/$($(1)).ps
 python_STEP_TO_PROG =  python/$($(1)).py
-r_STEP_TO_PROG =       r/$($(1)).r
-racket_STEP_TO_PROG =  racket/$($(1)).rkt
-rexx_STEP_TO_PROG =    rexx/$($(1)).rexxpp
-rpython_STEP_TO_PROG = rpython/$($(1))
-ruby_STEP_TO_PROG =    ruby/$($(1)).rb
-rust_STEP_TO_PROG =    rust/target/release/$($(1))
-scala_STEP_TO_PROG =   scala/target/scala-2.11/classes/$($(1)).class
-scheme_STEP_TO_PROG =  $(scheme_STEP_TO_PROG_$(scheme_MODE))
-skew_STEP_TO_PROG =    skew/$($(1)).js
-swift_STEP_TO_PROG =   swift/$($(1))
-swift3_STEP_TO_PROG =  swift3/$($(1))
-tcl_STEP_TO_PROG =     tcl/$($(1)).tcl
-ts_STEP_TO_PROG =      ts/$($(1)).js
-vb_STEP_TO_PROG =      vb/$($(1)).exe
-vhdl_STEP_TO_PROG =    vhdl/$($(1))
-vimscript_STEP_TO_PROG = vimscript/$($(1)).vim
-yorick_STEP_TO_PROG =  yorick/$($(1)).i
 
 
 #
@@ -261,9 +186,7 @@ opt_OPTIONAL        = $(if $(strip $(OPTIONAL)),$(if $(filter t true T True TRUE
 # Return list of test files for a given step. If REGRESS is set then
 # test files will include step 2 tests through tests for the step
 # being tested.
-STEP_TEST_FILES = $(strip $(wildcard \
-		    $(foreach s,$(if $(strip $(REGRESS)),$(regress_$(2)),$(2)),\
-		      $(1)/tests/$($(s))$(EXTENSION) tests/$($(s))$(EXTENSION))))
+STEP_TEST_FILES = $(strip $(wildcard $(foreach s,$(if $(strip $(REGRESS)),$(regress_$(2)),$(2)), $(1)/tests/$($(s))$(EXTENSION) tests/$($(s))$(EXTENSION))))
 
 # DOCKERIZE utility functions
 lc = $(subst A,a,$(subst B,b,$(subst C,c,$(subst D,d,$(subst E,e,$(subst F,f,$(subst G,g,$(subst H,h,$(subst I,i,$(subst J,j,$(subst K,k,$(subst L,l,$(subst M,m,$(subst N,n,$(subst O,o,$(subst P,p,$(subst Q,q,$(subst R,r,$(subst S,s,$(subst T,t,$(subst U,u,$(subst V,v,$(subst W,w,$(subst X,x,$(subst Y,y,$(subst Z,z,$1))))))))))))))))))))))))))
@@ -307,8 +230,7 @@ get_run_prefix = $(strip $(if $(strip $(DOCKERIZE) $(4)),\
 
 # Takes impl and step
 # Returns the runtest command prefix (with runtest options) for testing the given step
-get_runtest_cmd = $(call get_run_prefix,$(1),$(2),$(if $(filter cs fsharp tcl vb,$(1)),RAW=1,)) \
-		    ../runtest.py $(opt_DEFERRABLE) $(opt_OPTIONAL) $(call $(1)_TEST_OPTS) $(TEST_OPTS)
+get_runtest_cmd = $(call get_run_prefix,$(1),$(2),$(if $(filter cs fsharp tcl vb,$(1)),RAW=1,)) ../runtest.py $(opt_DEFERRABLE) $(opt_OPTIONAL) $(call $(1)_TEST_OPTS) $(TEST_OPTS)
 
 # Takes impl and step
 # Returns the runtest command prefix (with runtest options) for testing the given step
@@ -319,10 +241,7 @@ STEPS = $(sort $(filter step%,$(.VARIABLES)))
 DO_IMPLS = $(filter-out $(SKIP_IMPLS),$(IMPLS))
 IMPL_TESTS = $(foreach impl,$(DO_IMPLS),test^$(impl))
 STEP_TESTS = $(foreach step,$(STEPS),test^$(step))
-ALL_TESTS = $(filter-out $(test_EXCLUDES),\
-              $(strip $(sort \
-                $(foreach impl,$(DO_IMPLS),\
-                  $(foreach step,$(STEPS),test^$(impl)^$(step))))))
+ALL_TESTS = $(filter-out $(test_EXCLUDES), $(strip $(sort $(foreach impl,$(DO_IMPLS), $(foreach step,$(STEPS),test^$(impl)^$(step))))))
 
 DOCKER_BUILD = $(foreach impl,$(DO_IMPLS),docker-build^$(impl))
 
@@ -331,9 +250,7 @@ DOCKER_SHELL = $(foreach impl,$(DO_IMPLS),docker-shell^$(impl))
 IMPL_PERF = $(foreach impl,$(filter-out $(perf_EXCLUDES),$(DO_IMPLS)),perf^$(impl))
 
 IMPL_REPL = $(foreach impl,$(DO_IMPLS),repl^$(impl))
-ALL_REPL = $(strip $(sort \
-             $(foreach impl,$(DO_IMPLS),\
-               $(foreach step,$(STEPS),repl^$(impl)^$(step)))))
+ALL_REPL = $(strip $(sort $(foreach impl,$(DO_IMPLS), $(foreach step,$(STEPS),repl^$(impl)^$(step)))))
 
 
 #
